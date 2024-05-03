@@ -25,7 +25,7 @@
         xscreensaver -y \
         gnome-contacts -y \
         gnome-calendar -y \
-        gnome-extensions-app -y \
+        gnome-extensions -y \
         gnome-maps -y \
         gnome-weather -y \
         gnome-photos -y \
@@ -42,7 +42,12 @@
         gnome-nibbles -y \
         gnome-2048 -y
 
-
+#--------------------------------------------------------- Snap install
+    sudo zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Tumbleweed snappy
+    sudo zypper --gpg-auto-import-keys refresh
+    sudo zypper dup --from snappy
+    sudo zypper install snapd
+    sudo systemctl enable --now snapd
 
 #--------------------------------------------------------- Installing applications
 
@@ -51,12 +56,12 @@
         bat -y \
         ncdu -y \
         tmux -y \
-        neofetch -y \
+        fastfetch -y \
         btop -y \
+        nvtop -y \
         tldr -y \
         curl -y \
-        wget -y \
-        nvtop -y
+        wget -y
 
 # Development
     sudo zypper install \
@@ -65,13 +70,14 @@
         distrobox -y \
         podman -y \
         gnome-console -y
-    sudo usermod -aG vboxusers guilherme
+    sudo usermod -aG vboxusers $USER
     flatpak install flathub \
         io.github.dvlv.boxbuddyrs -y \
         io.podman_desktop.PodmanDesktop -y \
         io.github.shiftey.Desktop -y \
-        org.remmina.Remmina -y \
-        com.visualstudio.code -y
+        org.remmina.Remmina -y
+    sudo snap install \
+        code --classic -y
 
 # Tools
     sudo zypper install \
@@ -80,14 +86,12 @@
     flatpak install flathub \
         io.missioncenter.MissionCenter -y \
         org.gnome.Extensions -Y \
-        io.github.peazip.PeaZip -y \
         org.signal.Signal -y \
         org.videolan.VLC -y \
         it.mijorus.gearlever -y \
         org.gnome.NetworkDisplays -y \
         com.github.tenderowl.frog -y \
         org.qbittorrent.qBittorrent -y \
-        org.keepassxc.KeePassXC -y \
         com.github.finefindus.eyedropper -y \
         com.github.tchx84.Flatseal -y \
         org.pulseaudio.pavucontrol -y
@@ -127,7 +131,9 @@
         org.cryptomator.Cryptomator -y \
         org.gnome.World.PikaBackup -y \
         fr.romainvigier.MetadataCleaner -y \
-        io.github.cboxdoerfer.FSearch -y
+        io.github.cboxdoerfer.FSearch -y \
+        dev.geopjr.Collision -y \
+        io.github.peazip.PeaZip -y
     #! Filen Drive (Manual - Appimage)
 
 
@@ -139,7 +145,7 @@
         telnet -y \
         tcpdump -y \
         wireshark -y
-    sudo usermod -a -G wireshark guilherme
+    sudo usermod -a -G wireshark $USER
     #! NextDNS
 
 #--------------------------------------------------------- Terminal Configuration
@@ -169,7 +175,23 @@
     # Editing the zsh configuration file
         sed -i 's/ZSH_THEME="[^"]*"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
 
-        sed -i '/plugins=(/,/)/c\plugins=(\n\t##internal plugins\n\tgit\n\tvscode\n\tzsh-ssh\n\tnmap\n\tjump\n\tsudo\n\ttmux\n\tzsh-interactive-cd\n\t##external plugins\n\tzsh-syntax-highlighting\n\tzsh-autosuggestions\n\tfzf\n)' ~/.zshrc
+        sed -i '/plugins=(/,/)/c\
+        plugins=(\
+            ##internal plugins\
+            \tgit\
+            \tvscode\
+            \tzsh-ssh\
+            \tnmap\
+            \tjump\
+            \tsudo\
+            \ttmux\
+            \tzsh-interactive-cd\
+            ##external plugins\
+            \tzsh-syntax-highlighting\
+            \tzsh-autosuggestions\
+            \tfzf\
+        )' ~/.zshrc
+
 
     # Installing Github Copilot CLI
         sudo zypper install \
